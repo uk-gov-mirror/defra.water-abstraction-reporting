@@ -8,7 +8,7 @@ const { logger } = require('../../logger');
 
 // Set dates to format YYYY-MM-DD rather than full date/time string with timezone
 pg.types.setTypeParser(1082, 'text', function (val) {
-    return moment(val).format('YYYY-MM-DD');
+  return moment(val).format('YYYY-MM-DD');
 });
 
 exports.pool = helpers.db.createPool(config.pg, logger);

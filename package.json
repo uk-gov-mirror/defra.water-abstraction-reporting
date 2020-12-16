@@ -4,15 +4,29 @@
   "description": "Reporting microservice for the water abstraction service.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:ci": "lab -t 55 -m 0 --coverage-path ./src/ -r lcov -o coverage/lcov.info -r console -o stdout",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "@hapi/lab": "^24.1.0",
+    "auto-changelog": "^2.2.1",
+    "codecov": "^3.8.1",
+    "eslint": "^7.15.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "sinon": "^9.2.2"
+  },
   "dependencies": {
     "@envage/water-abstraction-helpers": "^4.3.6",
     "@hapi/good": "^9.0.1",
     "@hapi/hapi": "^20.0.3",
     "blipp": "^4.0.2",
+    "bullmq": "^1.12.0",
     "dotenv": "^8.2.0",
     "good-winston": "^4.0.0",
     "hapi-auth-jwt2": "^10.2.0",
