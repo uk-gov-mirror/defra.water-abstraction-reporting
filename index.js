@@ -12,6 +12,8 @@ const HapiAuthJwt2 = require('hapi-auth-jwt2');
 const config = require('./config');
 const routes = require('./src/routes.js');
 const db = require('./src/lib/connectors/db');
+const messageQueue = require('./src/lib/message-queue-v2').plugin;
+const { startReportsQueues } = require('./src/reports-generator');
 
 // Initialise logger
 const { logger } = require('./src/logger');
@@ -31,6 +33,9 @@ const registerServerPlugins = async (server) => {
       }
     }
   });
+
+  await server.register(messageQueue);
+
   await server.register({
     plugin: Blipp,
     options: config.blipp
@@ -52,7 +57,8 @@ const start = async function () {
   try {
     await registerServerPlugins(server);
     configureServerAuthStrategy(server);
-    server.route(routes);
+    server.route(routes); // Regsiter routes
+    await startReportsQueues(); // Register report jobs
 
     if (!module.parent) {
       await server.start();

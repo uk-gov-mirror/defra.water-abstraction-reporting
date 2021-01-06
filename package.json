@@ -25,12 +25,16 @@
     "@envage/water-abstraction-helpers": "^4.3.6",
     "@hapi/good": "^9.0.1",
     "@hapi/hapi": "^20.0.3",
+    "aws-sdk": "^2.821.0",
     "blipp": "^4.0.2",
     "bullmq": "^1.12.0",
+    "csv-writer": "^1.6.0",
     "dotenv": "^8.2.0",
     "good-winston": "^4.0.0",
     "hapi-auth-jwt2": "^10.2.0",
     "moment": "^2.29.1",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "proxy-agent": "^4.0.0",
+    "uuid": "^8.3.2"
   }
 }

@@ -41,13 +41,27 @@ module.exports = {
     port: process.env.REDIS_PORT || 6379,
     password: process.env.REDIS_PASSWORD || '',
     ...!(isLocal) && { tls: {} },
-    db: 2
+    db: 3
   },
 
   good: {
     ops: {
       interval: 10000
     }
+  },
+
+  reportsCron: {
+    activeReports: [
+      'unbilledLicencesReport',
+      'billedLicencesReport',
+      'revokedUncreditedLicencesReport'
+    ],
+    cron: // isAcceptanceTestTarget ? '* * * * *' : '0 4 * * *' // 0 16  * * *
+        {
+          unbilledLicencesReport: '0 9 * * *',
+          billedLicencesReport: '15 9 * * *',
+          revokedUncreditedLicencesReport: '30 9 * * *'
+        }
   },
 
   isAcceptanceTestTarget
