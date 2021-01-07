@@ -1,7 +1,7 @@
 const { pool } = require('../connectors/db');
 const unbilledLicencesReportHandler = require('../queries/unbilledLicences');
 const { logger } = require('../../logger');
-const { generateCsv } = require('../helpers/write-csv-to-s3');
+const csvWritingHelper = require('../helpers/write-csv-to-s3');
 const { getFinancialYear } = require('../helpers/financial-year');
 const handler = async () => {
   try {
@@ -12,7 +12,7 @@ const handler = async () => {
 
     // Write results to S3
     const filename = 'unbilledLicences.csv';
-    generateCsv(filename, res.rows, res.fields);
+    await csvWritingHelper.generateCsv(filename, res.rows, res.fields);
   } catch (e) {
     logger.error(e);
   }

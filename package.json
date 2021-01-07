@@ -19,12 +19,14 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^5.0.0",
-    "sinon": "^9.2.2"
+    "sinon": "^9.2.3"
   },
   "dependencies": {
     "@envage/water-abstraction-helpers": "^4.3.6",
+    "@hapi/code": "^8.0.2",
     "@hapi/good": "^9.0.1",
     "@hapi/hapi": "^20.0.3",
+    "await-fs": "^1.0.0",
     "aws-sdk": "^2.821.0",
     "blipp": "^4.0.2",
     "bullmq": "^1.12.0",

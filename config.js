@@ -56,11 +56,11 @@ module.exports = {
       'billedLicencesReport',
       'revokedUncreditedLicencesReport'
     ],
-    cron: // isAcceptanceTestTarget ? '* * * * *' : '0 4 * * *' // 0 16  * * *
+    cron:
         {
-          unbilledLicencesReport: '0 9 * * *',
-          billedLicencesReport: '15 9 * * *',
-          revokedUncreditedLicencesReport: '30 9 * * *'
+          unbilledLicencesReport: '0 */12 * * *',
+          billedLicencesReport: '15 */12 * * *',
+          revokedUncreditedLicencesReport: '30 */12 * * *'
         }
   },
 
