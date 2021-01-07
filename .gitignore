@@ -2,3 +2,4 @@
 .env
 .DS_Store
 /temp/*.csv
+coverage/lcov.info
