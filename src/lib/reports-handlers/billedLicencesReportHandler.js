@@ -11,7 +11,6 @@ const handler = async () => {
     // Write results to S3
     const filename = 'billedLicencesReport.csv';
     await csvWritingHelper.generateCsv(filename, res.rows, res.fields);
-    return 'ok';
   } catch (e) {
     logger.error(e);
   }

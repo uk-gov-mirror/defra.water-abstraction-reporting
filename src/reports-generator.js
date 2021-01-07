@@ -7,8 +7,8 @@ const reportHandlers = require('./lib/reports-handlers');
 const startReportsQueues = async () => {
   // BilledLicences report
   logger.info('Registering the messaging queue...');
-  reportsCron.activeReports.map(async reportName => {
-    await msgQueue.queueManager.register({
+  reportsCron.activeReports.forEach(reportName => {
+    msgQueue.queueManager.register({
       jobName: reportName,
       handler: reportHandlers[reportName],
       hasScheduler: true,
@@ -16,7 +16,7 @@ const startReportsQueues = async () => {
         logger.info(`${job.name} ran successfully at ${new Date()}`);
       },
       onFailed: (job, err) => {
-        logger.info(`${job.name} failed at ${new Date()}`);
+        logger.info(`${job.name} failed at ${new Date()}`, err);
       },
       createMessage: () => {
         return [reportName, {}, {
@@ -28,7 +28,7 @@ const startReportsQueues = async () => {
     });
 
     logger.info('Adding a report runner for ' + reportName);
-    await msgQueue.queueManager.add(reportName, {});
+    msgQueue.queueManager.add(reportName, {});
   });
 };
 

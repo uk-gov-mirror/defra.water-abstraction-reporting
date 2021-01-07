@@ -11,7 +11,7 @@ module.exports = {
   generateCsv: async (filename, records, fields) => {
     logger.info('Writing file to S3: ' + filename);
     if (records.length > 0) {
-      const filePath = process.env.PWD + '/temp/' + filename;
+      const filePath = `${process.env.PWD}/temp/${filename}`;
       const parsedFields = fields.map(field => {
         return {
           id: field.name,
@@ -40,8 +40,6 @@ module.exports = {
         }
         logger.info(`File uploaded successfully at ${data.Location}`);
       });
-    } else {
-      return null;
     }
   }
 };
