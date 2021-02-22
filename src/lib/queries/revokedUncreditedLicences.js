@@ -50,7 +50,7 @@ or v2doc.end_date >= NOW())
 join crm_v2.companies companies on
 companies.company_id = v2docRoles.company_id
 where
-l.revoked_date < NOW()
+(l.revoked_date < NOW() OR l.lapsed_date < NOW() or l.expired_date < NOW())
 and (cv.end_date is null
 or cv.end_date >= NOW())) select * from tempTable where "Charge Version ID" in
 (select charge_version_id from water.billing_batch_charge_version_years bbcvy

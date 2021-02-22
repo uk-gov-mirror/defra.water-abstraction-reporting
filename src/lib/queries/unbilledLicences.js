@@ -51,6 +51,8 @@ companies.company_id = v2docRoles.company_id
 where
 (l.expired_date is null
 or l.expired_date >= NOW())
+and (l.lapsed_date is null
+or l.lapsed_date >= NOW())
 and (l.revoked_date is null
 or l.revoked_date >= NOW())
 and (cv.end_date is null
