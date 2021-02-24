@@ -12,7 +12,7 @@ const startReportsQueues = async () => {
       jobName: reportName,
       handler: reportHandlers[reportName],
       hasScheduler: true,
-      onComplete: (job) => {
+      onComplete: job => {
         logger.info(`${job.name} ran successfully at ${new Date()}`);
       },
       onFailed: (job, err) => {

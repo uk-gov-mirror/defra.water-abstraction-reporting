@@ -61,4 +61,3 @@ jobs:
           args: >
             -Dsonar.organization=defra
             -Dsonar.projectKey=DEFRA_water-abstraction-reporting
-            -Dsonar.javascript.lcov.reportPaths=**/coverage/lcov.info
