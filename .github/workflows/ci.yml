@@ -18,23 +18,6 @@ jobs:
       JWT_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzNH0.MOREC6-Kszb9bDFw0O1UKywpnkcP-c5cPjASMpjk8Po
       DATABASE_URL: postgres://water:water@localhost:5432/water
 
-    services:
-      # Label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres:10-alpine
-        # Provide the password for postgres
-        env:
-          POSTGRES_USER: water
-          POSTGRES_DB: water
-          POSTGRES_PASSWORD: water
-        # Maps tcp port 5432 on service container to the host
-        ports:
-          - 5432:5432
-        # Set health checks to wait until postgres has started. You must have this so the runner knows to wait till
-        # postgres is up and running before proceeding
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Checkout repository
@@ -42,8 +25,18 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of sonarcloud analysis
 
+      # Our projects use .nvmrc files to specify the node version to use. We can read and then output it as the result
+      # this step. Subsequent steps can then access the value
+      - name: Read Node version
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        # Give the step an ID to make it easier to refer to
+        id: nvm
+
+      # Gets the version to use by referring to the previous step
       - name: Install Node
         uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
 
       # Speeds up workflows by reading the node modules from cache. Obviously you need to run it at least once, and the
       # cache will be updated should the package-lock.json file change
@@ -84,3 +77,4 @@ jobs:
           args: >
             -Dsonar.organization=defra
             -Dsonar.projectKey=DEFRA_water-abstraction-reporting
+            -Dsonar.javascript.lcov.reportPaths=**/coverage/lcov.info
