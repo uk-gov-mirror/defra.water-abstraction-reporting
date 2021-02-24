@@ -11,8 +11,8 @@ const { generateCsv, s3 } = require('../../../src/lib/helpers/write-csv-to-s3');
 experiment('lib/helpers/write-csv-to-s3', () => {
   beforeEach(() => {
     sandbox.stub(s3, 'upload').resolves();
-    sandbox.stub(fs, 'writeFile').resolves();
-    sandbox.stub(fs, 'readFile').resolves();
+    sandbox.spy(fs, 'writeFile');
+    sandbox.spy(fs, 'readFile');
   });
 
   afterEach(() => sandbox.restore());

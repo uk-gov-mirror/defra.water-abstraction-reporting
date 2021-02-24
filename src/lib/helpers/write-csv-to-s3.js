@@ -12,11 +12,8 @@ module.exports = {
     if (records.length < 1) {
       return null;
     } else {
-      const filePath = `${process.env.PWD || '.'}/temp/${filename}`;
-      console.log('===========');
-      console.log('===========');
-      console.log(filePath);
-      console.log('===========');
+      const filePath = `${process.env.PWD}/temp/${filename}`;
+
       const parsedFields = fields.map(field => {
         return {
           id: field.name,
