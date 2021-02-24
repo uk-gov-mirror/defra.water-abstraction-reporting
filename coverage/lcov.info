@@ -169,7 +169,7 @@ LF:42
 LH:37
 end_of_record
 TN:
-SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/queries/billedLicences.js
+SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/queries/billedActiveLicences.js
 DA:1,1
 DA:2,1
 DA:3,1
@@ -238,7 +238,7 @@ LF:63
 LH:63
 end_of_record
 TN:
-SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/queries/revokedUncreditedLicences.js
+SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/queries/uncreditedInactiveLicences.js
 DA:1,1
 DA:2,1
 DA:3,1
@@ -312,7 +312,7 @@ LF:68
 LH:68
 end_of_record
 TN:
-SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/queries/unbilledLicences.js
+SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/queries/unbilledActiveLicences.js
 DA:1,1
 DA:2,1
 DA:3,1
@@ -380,7 +380,7 @@ LF:62
 LH:62
 end_of_record
 TN:
-SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/reports-handlers/billedLicencesReportHandler.js
+SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/reports-handlers/billedActiveLicencesReportHandler.js
 DA:1,1
 DA:2,1
 DA:3,1
@@ -406,7 +406,7 @@ LF:17
 LH:16
 end_of_record
 TN:
-SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/reports-handlers/revokedUncreditedLicencesReportHandler.js
+SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/reports-handlers/uncreditedInactiveLicencesReportHandler.js
 DA:1,1
 DA:2,1
 DA:3,1
@@ -431,7 +431,7 @@ LF:16
 LH:15
 end_of_record
 TN:
-SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/reports-handlers/unbilledLicencesReportHandler.js
+SF:/Users/timtamimi/repos/water/water-abstraction-reporting/src/lib/reports-handlers/unbilledActiveLicencesReportHandler.js
 DA:1,1
 DA:2,1
 DA:3,1

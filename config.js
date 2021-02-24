@@ -52,15 +52,15 @@ module.exports = {
 
   reportsCron: {
     activeReports: [
-      'unbilledLicencesReport',
-      'billedLicencesReport',
-      'revokedUncreditedLicencesReport'
+      'unbilledActiveLicencesReport',
+      'billedActiveLicencesReport',
+      'uncreditedInactiveLicencesReport'
     ],
     cron:
         {
-          unbilledLicencesReport: '0 */12 * * *',
-          billedLicencesReport: '15 */12 * * *',
-          revokedUncreditedLicencesReport: '30 */12 * * *'
+          unbilledActiveLicencesReport: '0 */12 * * *',
+          billedActiveLicencesReport: '15 */12 * * *',
+          uncreditedInactiveLicencesReport: '30 */12 * * *'
         }
   },
 

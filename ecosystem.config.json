@@ -6,7 +6,7 @@
         "node_modules"
       ],
       "env": {
-        "watch": true
+        "watch": false
       },
       "env_production": {
         "watch": false,

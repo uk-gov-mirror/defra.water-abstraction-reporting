@@ -1,5 +1,9 @@
-module.exports = `select
-distinct l.licence_ref as "Licence No.",
+const moment = require('moment');
+
+module.exports = `with tempTable as (select
+distinct
+    null as "Unbilled active licences. Data generated ${moment().format('DD/MM/YYYY')}", 
+    l.licence_ref as "Licence No.",
     cv.charge_version_id as "Charge Version ID",
     ce.charge_element_id as "Charge Element ID",
     ce.description as "Charge Element Description",
@@ -17,8 +21,8 @@ distinct l.licence_ref as "Licence No.",
     fat.financial_agreement_code as "Financial Agreement Code",
     fat.description as "Financial Agreement Description",
     l.regions->>'regionalChargeArea' as "Regional Charge Area",
-    l.regions->>'SUC' as "SUC Code",
-    l.regions->>'LEAP' as "LEAP Code",
+    l.regions->>'standardUnitChargeCode' as "SUC Code",
+    l.regions->>'localEnvironmentAgencyPlanCode' as "LEAP Code",
     pp.legacy_id as "Primary Use Code",
     pp.description as "Primary Use Description",
     ps.legacy_id as "Secondary Use Code",
@@ -31,10 +35,6 @@ left join water.financial_agreement_types fat on
 fat.financial_agreement_type_id = la.financial_agreement_type_id
 join water.charge_versions cv on
 cv.licence_ref = l.licence_ref
-join water.billing_batch_charge_version_years bbcvy on
-bbcvy.charge_version_id = cv.charge_version_id
-join water.billing_batches bb on 
-bb.billing_batch_id = bbcvy.billing_batch_id 
 join water.charge_elements ce on
 ce.charge_version_id = cv.charge_version_id
 left join crm_v2.invoice_accounts ia on
@@ -60,6 +60,9 @@ or l.lapsed_date >= NOW())
 and (l.revoked_date is null
 or l.revoked_date >= NOW())
 and (cv.end_date is null
-or cv.end_date >= NOW())
-and bbcvy.financial_year_ending = $1
-and bb.status = 'sent'`;
+or cv.end_date >= NOW())) select * from tempTable where "Charge Version ID" not in 
+(select charge_version_id from water.billing_batch_charge_version_years bbcvy 
+join water.billing_batches bb on 
+bb.billing_batch_id = bbcvy.billing_batch_id  where 
+bbcvy.financial_year_ending = $1 
+and bb.status = 'sent')`;

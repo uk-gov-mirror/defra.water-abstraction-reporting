@@ -1,7 +1,7 @@
 const reportHandlers = {
-  billedLicencesReport: require('./billedLicencesReportHandler').handler,
-  revokedUncreditedLicencesReport: require('./revokedUncreditedLicencesReportHandler').handler,
-  unbilledLicencesReport: require('./unbilledLicencesReportHandler').handler
+  billedActiveLicencesReport: require('./billedActiveLicencesReportHandler').handler,
+  uncreditedInactiveLicencesReport: require('./uncreditedInactiveLicencesReportHandler').handler,
+  unbilledActiveLicencesReport: require('./unbilledActiveLicencesReportHandler').handler
 };
 
 module.exports = reportHandlers;

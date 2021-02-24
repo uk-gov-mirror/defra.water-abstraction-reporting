@@ -26,19 +26,19 @@ module.exports = {
       });
 
       await csvWriter.writeRecords(records);
-      const fileBuffer = await awaitfs.readFile(filePath);
-      const params = {
-        Bucket: process.env.S3_BUCKET,
-        Key: 'reporting/' + filename,
-        Body: JSON.stringify(fileBuffer, null, 2)
-      };
 
-      s3.upload(params, function (err, data) {
-        if (err) {
-          logger.error(err);
-          throw err;
-        }
-        logger.info(`File uploaded successfully at ${data.Location}`);
+      fs.readFile(filePath, 'utf-8', (err, data) => {
+        if (err) throw err;
+        const params = {
+          Bucket: process.env.S3_BUCKET,
+          Key: 'reporting/' + filename,
+          Body: data
+        };
+
+        s3.upload(params, (s3Err, data) => {
+          if (s3Err) throw s3Err;
+          console.log(`File uploaded successfully at ${data.Location}`);
+        });
       });
     }
   }

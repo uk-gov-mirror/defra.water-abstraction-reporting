@@ -1,4 +1,4 @@
-const handler = require('../../../src/lib/reports-handlers/unbilledLicencesReportHandler').handler;
+const handler = require('../../../src/lib/reports-handlers/uncreditedInactiveLicencesReportHandler').handler;
 const { pool } = require('../../../src/lib/connectors/db');
 const csvWritingHelper = require('../../../src/lib/helpers/write-csv-to-s3');
 const financialYearHelper = require('../../../src/lib/helpers/financial-year');
@@ -7,7 +7,7 @@ const { experiment, test, beforeEach, afterEach } = exports.lab = Lab.script();
 const { expect } = require('@hapi/code');
 const sandbox = require('sinon').createSandbox();
 
-experiment('lib/reports-handlers/unbilledLicencesReportHandler', () => {
+experiment('lib/reports-handlers/revokedUncreditedLicencesReportHandler', () => {
   beforeEach(async () => {
     await sandbox.stub(pool, 'query').resolves({ rows: [], fields: [] });
 

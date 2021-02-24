@@ -1,12 +1,15 @@
-module.exports = `with tempTable as (select
-distinct l.licence_ref as "Licence No.",
+const moment = require('moment');
+
+module.exports = `select
+distinct 
+    null as "Billed active licences. Data generated ${moment().format('DD/MM/YYYY')}",
+    l.licence_ref as "Licence No.",
     cv.charge_version_id as "Charge Version ID",
     ce.charge_element_id as "Charge Element ID",
     ce.description as "Charge Element Description",
     companies.name as "Licence Holder Name",
     l.start_date as "Orig. Effective Date",
     l.expired_date as "Expiry date",
-    l.revoked_date as "Revoked date",
     ce.time_limited_start_date as "TL Start",
     ce.time_limited_end_date as "TL End",
     cv.invoice_account_id as "Invoice Account ID",
@@ -18,8 +21,8 @@ distinct l.licence_ref as "Licence No.",
     fat.financial_agreement_code as "Financial Agreement Code",
     fat.description as "Financial Agreement Description",
     l.regions->>'regionalChargeArea' as "Regional Charge Area",
-    l.regions->>'standardUnitChargeCode' as "SUC Code",
-    l.regions->>'localEnvironmentAgencyPlanCode' as "LEAP Code",
+    l.regions->>'SUC' as "SUC Code",
+    l.regions->>'LEAP' as "LEAP Code",
     pp.legacy_id as "Primary Use Code",
     pp.description as "Primary Use Description",
     ps.legacy_id as "Secondary Use Code",
@@ -32,6 +35,10 @@ left join water.financial_agreement_types fat on
 fat.financial_agreement_type_id = la.financial_agreement_type_id
 join water.charge_versions cv on
 cv.licence_ref = l.licence_ref
+join water.billing_batch_charge_version_years bbcvy on
+bbcvy.charge_version_id = cv.charge_version_id
+join water.billing_batches bb on 
+bb.billing_batch_id = bbcvy.billing_batch_id 
 join water.charge_elements ce on
 ce.charge_version_id = cv.charge_version_id
 left join crm_v2.invoice_accounts ia on
@@ -50,19 +57,13 @@ or v2doc.end_date >= NOW())
 join crm_v2.companies companies on
 companies.company_id = v2docRoles.company_id
 where
-(l.revoked_date < NOW() OR l.lapsed_date < NOW() or l.expired_date < NOW())
+(l.expired_date is null
+or l.expired_date >= NOW())
+and (l.lapsed_date is null
+or l.lapsed_date >= NOW())
+and (l.revoked_date is null
+or l.revoked_date >= NOW())
 and (cv.end_date is null
-or cv.end_date >= NOW())) select * from tempTable where "Charge Version ID" in
-(select charge_version_id from water.billing_batch_charge_version_years bbcvy
-join water.billing_batches bb on
-bb.billing_batch_id = bbcvy.billing_batch_id  where
-bbcvy.financial_year_ending = $1
-and bb.status = 'sent'
-and bb.batch_type= 'annual')
-and "Charge Version ID" not in (
-    select charge_version_id from water.billing_batch_charge_version_years bbcvy
-join water.billing_batches bb on
-bb.billing_batch_id = bbcvy.billing_batch_id  where
-bbcvy.financial_year_ending = $1
-and bb.status = 'sent'
-and bb.batch_type= 'supplementary')`;
+or cv.end_date >= NOW())
+and bbcvy.financial_year_ending = $1
+and bb.status = 'sent'`;
