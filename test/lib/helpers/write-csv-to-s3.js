@@ -12,6 +12,7 @@ experiment('lib/helpers/write-csv-to-s3', () => {
   beforeEach(() => {
     sandbox.stub(s3, 'upload').resolves();
     sandbox.stub(fs, 'writeFile');
+    sandbox.stub(fs, 'readFile');
   });
 
   afterEach(() => sandbox.restore());
@@ -35,6 +36,9 @@ experiment('lib/helpers/write-csv-to-s3', () => {
     });
     test('stores a file', () => {
       expect(fs.writeFile.called).to.be.true();
+    });
+    test('reads a file', () => {
+      expect(fs.readFile.called).to.be.true();
     });
   });
 });
