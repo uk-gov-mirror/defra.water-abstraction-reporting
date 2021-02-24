@@ -11,6 +11,29 @@ jobs:
   build:
     # You must use a Linux environment when using service containers or container jobs
     runs-on: ubuntu-latest
+    env:
+      TEST_MODE: 1
+      NODE_ENV: test
+      JWT_SECRET: secret
+      JWT_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzNH0.MOREC6-Kszb9bDFw0O1UKywpnkcP-c5cPjASMpjk8Po
+      DATABASE_URL: postgres://water:water@localhost:5432/water
+
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres:10-alpine
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: water
+          POSTGRES_DB: water
+          POSTGRES_PASSWORD: water
+        # Maps tcp port 5432 on service container to the host
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started. You must have this so the runner knows to wait till
+        # postgres is up and running before proceeding
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests
