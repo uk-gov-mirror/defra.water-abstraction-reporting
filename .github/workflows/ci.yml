@@ -17,6 +17,7 @@ jobs:
       JWT_SECRET: secret
       JWT_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzNH0.MOREC6-Kszb9bDFw0O1UKywpnkcP-c5cPjASMpjk8Po
       DATABASE_URL: postgres://water:water@localhost:5432/water
+      S3_BUCKET: somebucket
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests
