@@ -23,7 +23,7 @@ experiment('lib/helpers/write-csv-to-s3', () => {
       response = await generateCsv('test-report-1.csv', [], [{ name: 'somefield' }]);
     });
     test('returns nothing', () => {
-      expect(response).to.equal(null);
+      expect(response).to.equal(undefined);
     });
     test('stores nothing', () => {
       expect(fs.writeFile.called).to.be.false();
