@@ -38,7 +38,7 @@ module.exports = {
           Body: data
         };
 
-        s3.upload(params, (s3Err, s3Data) => {
+        return s3.upload(params, (s3Err, s3Data) => {
           if (s3Err) {
             throw s3Err;
           }
