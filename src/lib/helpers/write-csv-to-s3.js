@@ -9,7 +9,7 @@ module.exports = {
   s3: s3, // exports s3 instance so it can be stubbed in testing
   generateCsv: async (filename, records, fields) => {
     logger.info('Writing file to S3: ' + filename);
-    if (records.length > 1) {
+    if (records.length > 0) {
       const filePath = `${process.env.PWD}/temp/${filename}`;
 
       const parsedFields = fields.map(field => {
@@ -28,7 +28,7 @@ module.exports = {
 
       await csvWriter.writeRecords(records);
 
-      return fs.readFile(filePath, 'utf-8', (err, data) => {
+      fs.readFile(filePath, 'utf-8', (err, data) => {
         if (err) {
           throw err;
         }
@@ -38,13 +38,15 @@ module.exports = {
           Body: data
         };
 
-        return s3.upload(params, (s3Err, s3Data) => {
+        s3.upload(params, (s3Err, s3Data) => {
           if (s3Err) {
             throw s3Err;
           }
           logger.info(`File uploaded successfully at ${s3Data.Location}`);
         });
       });
+
+      return 'Uploaded';
     }
   }
 };
