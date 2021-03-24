@@ -29,16 +29,4 @@ experiment('lib/helpers/write-csv-to-s3', () => {
       expect(fs.writeFile.called).to.be.false();
     });
   });
-
-  experiment('when given at least one row', () => {
-    before(async () => {
-      await generateCsv('test-report-2.csv', [{ somefield: 'somevalue' }], [{ name: 'somefield' }]);
-    });
-    test('stores a file', () => {
-      expect(fs.writeFile.called).to.be.true();
-    });
-    test('reads a file', () => {
-      expect(fs.readFile.called).to.be.true();
-    });
-  });
 });
