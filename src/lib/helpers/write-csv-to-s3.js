@@ -48,5 +48,6 @@ module.exports = {
 
       return 'Uploaded';
     }
+    return undefined;
   }
 };
