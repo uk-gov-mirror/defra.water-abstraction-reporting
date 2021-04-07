@@ -1,5 +1,7 @@
 const pkg = require('../package.json');
+const { getObject } = require('./lib/helpers/report-fetcher');
 const { pool } = require('./lib/connectors/db');
+const { logger } = require('./logger');
 
 const getStatus = async () => {
   try {
@@ -14,4 +16,22 @@ const getStatus = async () => {
   }
 };
 
+const getReport = async (request, h) => {
+  const { reportKey } = request.params;
+  return getObject(reportKey)
+    .then((response) => {
+      const outputResponse = h.response(response.readStream).code(response.statusCode);
+
+      Object.fromEntries(Object.entries(response.headers).map(([k, v]) => outputResponse.header(k, v)));
+
+      return outputResponse;
+    })
+    .catch((err) => {
+      logger.error(err);
+      h.status(500);
+      return h('error');
+    });
+};
+
 exports.getStatus = getStatus;
+exports.getReport = getReport;
