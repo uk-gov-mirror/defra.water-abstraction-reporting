@@ -29,7 +29,6 @@ experiment('controllers', () => {
   });
 
   experiment('.getReport', () => {
-    let response;
     experiment('when called', () => {
       before(async () => {
         await sandbox.stub(reportFetcher, 'getObject').resolves({
