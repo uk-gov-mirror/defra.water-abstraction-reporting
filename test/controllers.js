@@ -39,7 +39,7 @@ experiment('controllers', () => {
           },
           readStream: Buffer.alloc(1, null, 'utf-8')
         });
-        response = await controllers.getReport({
+        await controllers.getReport({
           params: {
             reportKey: 'someReport'
           }
