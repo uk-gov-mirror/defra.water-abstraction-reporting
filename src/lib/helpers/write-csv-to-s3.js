@@ -8,43 +8,36 @@ const s3 = getS3();
 module.exports = {
   s3: s3, // exports s3 instance so it can be stubbed in testing
   generateCsv: async (filename, records, fields) => {
-    try {
-      logger.info(`Writing ${records.length} records with ${fields.length} fields to ${filename}`);
-      if (records.length < 1) {
-        return null;
-      } else {
-        const filePath = `${process.env.PWD}/temp/${filename}`;
+    logger.info(`Writing ${records.length} records with ${fields.length} fields to ${filename}`);
 
-        const parsedFields = fields.map(field => {
-          return {
-            id: field.name,
-            title: field.name
-          };
-        });
+    const filePath = `${process.env.PWD}/temp/${filename}`;
 
-        const csvWriter = csvObjectWriter({
-          path: filePath,
-          header: parsedFields
-        });
+    const parsedFields = fields.map(field => {
+      return {
+        id: field.name,
+        title: field.name
+      };
+    });
 
-        await csvWriter.writeRecords(records);
+    const csvWriter = csvObjectWriter({
+      path: filePath,
+      header: parsedFields
+    });
 
-        fs.readFile(filePath, 'utf-8', (err, data) => {
-          if (err) throw err;
-          const params = {
-            Bucket: process.env.S3_BUCKET,
-            Key: 'reporting/' + filename,
-            Body: data
-          };
+    await csvWriter.writeRecords(records);
 
-          s3.upload(params, (s3Err, data) => {
-            if (s3Err) throw s3Err;
-            logger.info(`File uploaded successfully at ${data.Location}`);
-          });
-        });
-      }
-    } catch (e) {
-      throw e;
-    }
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+      if (err) throw err;
+      const params = {
+        Bucket: process.env.S3_BUCKET,
+        Key: 'reporting/' + filename,
+        Body: data
+      };
+
+      s3.upload(params, (s3Err, data) => {
+        if (s3Err) throw s3Err;
+        logger.info(`File uploaded successfully at ${data.Location}`);
+      });
+    });
   }
 };

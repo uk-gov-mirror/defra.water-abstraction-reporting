@@ -9,7 +9,7 @@ const handler = async () => {
     // Run query
     const res = await pool.query(uncreditedInactiveLicences, [financialYear]);
     // Write results to S3
-    const filename = 'uncreditedInactiveLicences.csv';
+    const filename = 'uncreditedInactiveLicencesReport.csv';
     await csvWritingHelper.generateCsv(filename, res.rows, res.fields);
   } catch (e) {
     logger.error(e);

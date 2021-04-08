@@ -25,7 +25,7 @@ const routes = [{
     },
     description: 'Grabs a report given its key'
   },
-  path: '/report/{reportKey}'
+  path: '/reporting/1.0/report/{reportKey}'
 }];
 
 module.exports = routes;

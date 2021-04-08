@@ -4,6 +4,7 @@
   "description": "Reporting microservice for the water abstraction service.",
   "main": "index.js",
   "scripts": {
+    "test": "lab -t 55 -m 0 --coverage-path ./src/ -r lcov -o coverage/lcov.info -r console -o stdout",
     "test:ci": "lab -t 55 -m 0 --coverage-path ./src/ -r lcov -o coverage/lcov.info -r console -o stdout",
     "lint": "eslint ."
   },

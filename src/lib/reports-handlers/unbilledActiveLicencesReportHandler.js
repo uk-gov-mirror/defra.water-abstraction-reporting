@@ -11,7 +11,7 @@ const handler = async () => {
     const res = await pool.query(unbilledActiveLicences, [financialYear]);
 
     // Write results to S3
-    const filename = 'unbilledActiveLicences.csv';
+    const filename = 'unbilledActiveLicencesReport.csv';
     await csvWritingHelper.generateCsv(filename, res.rows, res.fields);
   } catch (e) {
     logger.error(e);
