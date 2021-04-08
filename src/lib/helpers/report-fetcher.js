@@ -2,8 +2,9 @@ const { getS3 } = require('../connectors/s3');
 
 const s3 = getS3();
 
-const getObject = key => {
-  return new Promise((resolve, reject) => {
+module.exports = {
+  s3,
+  getObject: key => new Promise((resolve, reject) => {
     // Get the file from the bucket
     s3.getObject({
       Bucket: process.env.S3_BUCKET,
@@ -30,9 +31,8 @@ const getObject = key => {
           responseObject.readStream = response.httpResponse.createUnbufferedStream();
           return resolve(responseObject);
         }
+        return reject(new Error('Something went wrong when attempting to fetch the report from storage'));
       })
       .send();
-  });
+  })
 };
-
-exports.getObject = getObject;
