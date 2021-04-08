@@ -36,11 +36,11 @@ module.exports = {
         Body: data
       };
 
-      s3.upload(params, (s3Err, data) => {
+      s3.upload(params, (s3Err, dataOut) => {
         if (s3Err) {
           throw s3Err;
         }
-        logger.info(`File uploaded successfully at ${data.Location}`);
+        logger.info(`File uploaded successfully at ${dataOut.Location}`);
       });
     });
   }
