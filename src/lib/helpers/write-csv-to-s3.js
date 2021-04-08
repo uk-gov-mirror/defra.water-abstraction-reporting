@@ -27,7 +27,9 @@ module.exports = {
     await csvWriter.writeRecords(records);
 
     fs.readFile(filePath, 'utf-8', (err, data) => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       const params = {
         Bucket: process.env.S3_BUCKET,
         Key: 'reporting/' + filename,
@@ -35,7 +37,9 @@ module.exports = {
       };
 
       s3.upload(params, (s3Err, data) => {
-        if (s3Err) throw s3Err;
+        if (s3Err) {
+          throw s3Err;
+        }
         logger.info(`File uploaded successfully at ${data.Location}`);
       });
     });

@@ -19,14 +19,14 @@ const getStatus = async () => {
 const getReport = async (request, h) => {
   const { reportKey } = request.params;
   return getObject(reportKey)
-    .then((response) => {
+    .then(response => {
       const outputResponse = h.response(response.readStream).code(response.statusCode);
 
       Object.fromEntries(Object.entries(response.headers).map(([k, v]) => outputResponse.header(k, v)));
 
       return outputResponse;
     })
-    .catch((err) => {
+    .catch(err => {
       logger.error(err);
       h.status(500);
       return h('error');
