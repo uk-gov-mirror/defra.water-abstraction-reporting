@@ -1,5 +1,4 @@
 const { getS3 } = require('../connectors/s3');
-const { logger } = require('../../logger');
 
 const s3 = getS3();
 
