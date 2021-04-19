@@ -14,22 +14,7 @@ module.exports = {
       .on('httpHeaders', (statusCode, headers, response) => {
         // If the Key was found inside Bucket, prepare a response object
         if (statusCode === 200) {
-          const responseObject = {
-            statusCode: statusCode,
-            headers: {
-              'Content-Disposition': `attachment; filename=${key}`
-            }
-          };
-
-          if (headers['content-type']) {
-            responseObject.headers['Content-Type'] = headers['content-type'];
-          }
-          if (headers['content-length']) {
-            responseObject.headers['Content-Length'] = headers['content-length'];
-          }
-
-          responseObject.readStream = response.httpResponse.createUnbufferedStream();
-          return resolve(responseObject);
+          return resolve({ readStream: response.httpResponse.createUnbufferedStream() });
         }
         return reject(new Error('Something went wrong when attempting to fetch the report from storage'));
       })

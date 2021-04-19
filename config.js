@@ -29,6 +29,8 @@ module.exports = {
     bucket: process.env.S3_BUCKET
   },
 
+  proxy: process.env.PROXY,
+
   server: {
     port: 8009,
     router: {
