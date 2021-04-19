@@ -8,7 +8,7 @@ const csvObjectWriter = require('csv-writer');
 experiment('lib/helpers/write-csv-to-s3', () => {
   beforeEach(async () => {
     sandbox.spy(csvObjectWriter, 'createObjectCsvWriter');
-
+    sandbox.stub(csvWritingHelper.s3, 'upload').resolves();
     await csvWritingHelper.generateCsv(
       'somefile.csv',
       [{ somefield: 'somevalue' }],
