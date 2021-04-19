@@ -58,9 +58,9 @@ module.exports = {
     ],
     cron:
         {
-          unbilledActiveLicencesReport: '0 */12 * * *',
-          billedActiveLicencesReport: '15 */12 * * *',
-          uncreditedInactiveLicencesReport: '30 */12 * * *'
+          unbilledActiveLicencesReport: '0 0 */3 ? * *',
+          billedActiveLicencesReport: '0 0 */3 ? * *',
+          uncreditedInactiveLicencesReport: '0 0 */3 ? * *'
         }
   },
 

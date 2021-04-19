@@ -1,4 +1,4 @@
-const csvObjectWriter = require('csv-writer').createObjectCsvWriter;
+const csvObjectWriter = require('csv-writer');
 const { getS3 } = require('../connectors/s3');
 const { logger } = require('../../logger');
 const fs = require('fs');
@@ -19,7 +19,7 @@ module.exports = {
       };
     });
 
-    const csvWriter = csvObjectWriter({
+    const csvWriter = csvObjectWriter.createObjectCsvWriter({
       path: filePath,
       header: parsedFields
     });
@@ -41,6 +41,13 @@ module.exports = {
           throw s3Err;
         }
         logger.info(`File uploaded successfully at ${dataOut.Location}`);
+
+        fs.unlink(filePath, unlinkErr => {
+          if (unlinkErr) {
+            throw unlinkErr;
+          }
+          logger.info(`File no longer relevant - deleting ${dataOut.Location} from the local server`);
+        });
       });
     });
   }

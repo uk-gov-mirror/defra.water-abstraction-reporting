@@ -2,15 +2,16 @@
 const msgQueue = require('./lib/message-queue-v2');
 const { logger } = require('./logger');
 const { reportsCron } = require('../config');
-const reportHandlers = require('./lib/reports-handlers');
+// const reportHandlers = require('./lib/reports-handlers');
+const { handler } = require('./lib/helpers/report-handler');
 
-const startReportsQueues = async () => {
+const startReportsQueues = () => {
   // BilledLicences report
   logger.info('Registering the messaging queue...');
   reportsCron.activeReports.forEach(reportName => {
     msgQueue.queueManager.register({
       jobName: reportName,
-      handler: reportHandlers[reportName],
+      handler: () => handler(reportName),
       hasScheduler: true,
       onComplete: job => {
         logger.info(`${job.name} ran successfully at ${new Date()}`);
@@ -18,13 +19,11 @@ const startReportsQueues = async () => {
       onFailed: (job, err) => {
         logger.info(`${job.name} failed at ${new Date()}`, err);
       },
-      createMessage: () => {
-        return [reportName, {}, {
-          repeat: {
-            cron: reportsCron.cron[reportName]
-          }
-        }];
-      }
+      createMessage: () => [reportName, {}, {
+        repeat: {
+          cron: reportsCron.cron[reportName]
+        }
+      }]
     });
 
     logger.info('Adding a report runner for ' + reportName);
