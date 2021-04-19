@@ -9,7 +9,7 @@ const {
 } = exports.lab = require('@hapi/lab').script();
 const sandbox = require('sinon').createSandbox();
 
-const { plugin, QueueManager } = require('../../src/lib/message-queue-v2');
+const { plugin } = require('../../src/lib/message-queue-v2');
 const ioRedis = require('../../src/lib/connectors/io-redis');
 
 experiment('lib/message-queue-v2', () => {
@@ -37,13 +37,13 @@ experiment('lib/message-queue-v2', () => {
     });
 
     test('the hapi server is decorated with the QueueManager instance', async () => {
-      const [target, name, inst] = server.decorate.firstCall.args;
+      const [target, name] = server.decorate.firstCall.args;
       expect(target).to.equal('server');
       expect(name).to.equal('queueManager');
     });
 
     test('the hapi request is decorated with the QueueManager instance', async () => {
-      const [target, name, inst] = server.decorate.secondCall.args;
+      const [target, name] = server.decorate.secondCall.args;
       expect(target).to.equal('request');
       expect(name).to.equal('queueManager');
     });
