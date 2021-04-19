@@ -7,7 +7,6 @@ const sandbox = require('sinon').createSandbox();
 
 const { pool } = require('../src/lib/connectors/db');
 const controllers = require('../src/controllers');
-const reportFetcher = require('../src/lib/helpers/report-fetcher');
 
 experiment('controllers', () => {
   afterEach(() => sandbox.restore());
