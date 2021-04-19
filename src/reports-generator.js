@@ -2,7 +2,6 @@
 const msgQueue = require('./lib/message-queue-v2');
 const { logger } = require('./logger');
 const { reportsCron } = require('../config');
-// const reportHandlers = require('./lib/reports-handlers');
 const { handler } = require('./lib/helpers/report-handler');
 
 const startReportsQueues = () => {

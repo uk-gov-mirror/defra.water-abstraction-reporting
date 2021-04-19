@@ -12,7 +12,7 @@ const reportQueryMapper = {
   uncreditedInactiveLicencesReport: uncreditedInactiveLicences
 };
 
-const handler = async (reportName) => {
+const handler = async reportName => {
   try {
     const financialYear = getFinancialYear(new Date());
     // Run query

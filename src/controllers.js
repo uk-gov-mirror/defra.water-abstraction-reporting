@@ -20,11 +20,7 @@ const getReport = async (request, h) => {
   const { reportKey } = request.params;
 
   return reportFetcher.getObject(reportKey)
-    .then(response => {
-      const outputResponse = h.response(response.readStream).code(response.statusCode);
-      Object.fromEntries(Object.entries(response.headers).map(([k, v]) => outputResponse.header(k, v)));
-      return outputResponse;
-    })
+    .then(response => response.readStream)
     .catch(err => {
       logger.error(err);
       return h.response({ data: null, err }).code(500);
