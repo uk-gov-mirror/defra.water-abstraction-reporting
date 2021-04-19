@@ -27,31 +27,4 @@ experiment('controllers', () => {
       });
     });
   });
-
-  experiment('.getReport', () => {
-    experiment('when called', () => {
-      before(async () => {
-        await sandbox.stub(reportFetcher, 'getObject').resolves({
-          statusCode: 200,
-          headers: {
-            someHeader: 'someValue'
-          },
-          readStream: Buffer.alloc(1, null, 'utf-8')
-        });
-        await controllers.getReport({
-          params: {
-            reportKey: 'someReport'
-          }
-        }, {
-          status: sandbox.spy(),
-          response: sandbox.stub().returns({
-            code: sandbox.spy()
-          })
-        });
-      });
-      test('calls the report fetcher', () => {
-        expect(reportFetcher.getObject.called).to.be.true();
-      });
-    });
-  });
 });
