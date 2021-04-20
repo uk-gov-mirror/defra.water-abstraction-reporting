@@ -55,6 +55,9 @@ class QueueManager {
 
     // Create queue
     const queue = new bull.Queue(jobContainer.jobName, { connection });
+    if (jobContainer.obliterate === true) {
+      queue.obliterate();
+    }
 
     // Create worker with handler
     const workerOpts = {

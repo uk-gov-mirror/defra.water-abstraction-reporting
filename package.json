@@ -30,7 +30,7 @@
     "await-fs": "^1.0.0",
     "aws-sdk": "^2.821.0",
     "blipp": "^4.0.2",
-    "bullmq": "^1.12.0",
+    "bullmq": "^1.19.0",
     "csv-writer": "^1.6.0",
     "dotenv": "^8.2.0",
     "good-winston": "^4.0.0",

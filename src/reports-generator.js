@@ -22,7 +22,8 @@ const startReportsQueues = () => {
         repeat: {
           cron: reportsCron.cron[reportName]
         }
-      }]
+      }],
+      obliterate: true // Tells Bull MQ to destroy the queue once it is scaffolded.
     });
 
     logger.info('Adding a report runner for ' + reportName);
